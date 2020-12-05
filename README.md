@@ -2,8 +2,13 @@
 
 Requesting large number of blocks at once from Geth client
 could cause significant overhead to a program.
-This Python library helps reading blocks directly from Geth's
-internal databases, including Level DB and Freezer DB.
+We encounter this problem in our research project, which needs to iterate
+through all existing blocks to analyze the algorithm we designed.
+Thus, we implemented this Python library that helps us reading blocks directly
+from Geth's internal databases, including LevelDB and FreezerDB.
+
+In addition, we also discussed more technical details on how to access both DBs
+and what is FreezerDB in [docs/AccessGethDB.md](./docs/AccessGethDB.md)
 
 ## Requirements
 
