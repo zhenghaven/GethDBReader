@@ -44,7 +44,8 @@ class GethFreezerDB:
 		Constructs the manager, and opens all necessary tables.
 
 		Args:
-			path: A string, which specifies the path to the directory that stores all the FreezerDB files.
+			path: A path, which specifies the path to the directory
+			      that stores all the FreezerDB files.
 		"""
 
 		self.path = path
@@ -89,6 +90,16 @@ class GethFreezerDB:
 		print()
 		print('INFO:', 'Verified {} blocks.'.format(i))
 		print('INFO:', 'Where {} blocks failed.'.format(failed))
+
+	def GetBlockCount(self):
+		"""
+		Get the number of blocks stored in the FreezerDB.
+
+		Returns:
+			The number of blocks stored in the FreezerDB.
+		"""
+
+		return self.tables[TABLE_HASHES].GetItemsCount()
 
 	def GetHeaderHash(self, num):
 		"""

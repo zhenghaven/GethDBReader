@@ -93,7 +93,8 @@ class GethLevelDB:
 		Constructs the manager, and opens all necessary tables.
 
 		Args:
-			path: A string, which specifies the path to the directory that stores all the LevelDB files.
+			path: A path, which specifies the path to the directory
+			      that stores all the LevelDB files.
 		"""
 
 		self.path = path

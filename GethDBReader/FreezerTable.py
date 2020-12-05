@@ -363,12 +363,14 @@ class FreezerTable:
 		Retrieve one piece of data from the table.
 
 		Args:
-			item: A integer, which specifies the index of data to be retrieved.
+			item: A integer, which specifies the index number of the data
+			to be retrieved.
 
 		Returns:
 			Bytes retrieved from the table.
 
 		Raises:
+			KeyError    : when the index number is out of range.
 			RuntimeError: when failed to retrieve data.
 		"""
 
@@ -378,10 +380,10 @@ class FreezerTable:
 				raise RuntimeError('The table or the item is inaccessible')
 
 			if self.items <= item: #atomic.load(self.items)
-				raise RuntimeError('The item number is out of bounds')
+				raise KeyError('The item number is out of bounds')
 
 			if self.itemOffset > item:
-				raise RuntimeError('The item offset number is out of bounds')
+				raise KeyError('The item offset number is out of bounds')
 
 			startOffset, endOffset, filenum = self.GetBounds(item - self.itemOffset)
 
@@ -423,6 +425,16 @@ class FreezerTable:
 		with self.lock.gen_rlock():
 			res = t.SizeNolock()
 			return res
+
+	def GetItemsCount(self):
+		"""
+		Get the number of items stored in the table.
+
+		Returns:
+			The number of items stored in the table.
+		"""
+
+		return self.items
 
 	# sizeNolock returns the total data size in the freezer table without obtaining
 	# the mutex first.
@@ -466,7 +478,8 @@ def NewCustomTable(path, name, readMeter, writeMeter, sizeGauge, maxFilesize, no
 	This function is usually used internally.
 
 	Args:
-		path         : A string,  specifies the path to the folder that stores the Freezer table files.
+		path         : A string or os.path,  specifies the path to the folder
+		               that stores the Freezer table files.
 		name         : A string,  specifies the name of the table.
 		readMeter    : Not in used.
 		writeMeter   : Not in used.
