@@ -28,6 +28,26 @@ it's probably stored in the LevelDB.
 FreezerDB's directory is typically the one named `ancient` under the LevelDB's
 directory.
 
+### GethDB
+
+This is the single interface that helps looking for the block from both
+DB automatically.
+
+```python
+#! /usr/bin/python3
+
+from GethDBReader import GethDB
+
+# Construct the DB by giving the path to the DB
+db = GethDB.GethDB('<Path to the LevelDB>', '<Path to the FreezerDB>(optional)')
+
+# Get Eth header by giving its block number
+print(db.GetHeaderByNum(0))
+```
+
+If a more specific access to one of the DB is needed, the following modules can
+be used.
+
 ### GethLevelDB
 
 ```python
